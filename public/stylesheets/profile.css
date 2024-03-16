@@ -86,7 +86,9 @@ body {
   margin: 15px;
 }
 
-#btn button {
+#btn .msg {
+  text-decoration: none;
+  color: #543dae;
   margin: 0 20px;
   padding: 10px 15px;
   background-color: #ead725;
@@ -95,7 +97,7 @@ body {
   font-weight: 700;
 }
 
-#btn button:hover {
+#btn .msg:hover {
   box-shadow: 0 4px 8px 0 #e7e9eb, 0 6px 20px 0 #e7e9eb;
 }
 
