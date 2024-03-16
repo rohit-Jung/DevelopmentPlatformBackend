@@ -1,27 +1,34 @@
-var express = require("express");
-const { loginUser, registerUser } = require("../controller/user.controller");
-var router = express.Router();
+const express = require("express");
+const verifyJWT = require("../middleware/auth.middleware");
+const {
+  loginUser,
+  logoutUser,
+  registerUser,
+} = require("../controller/userController");
+const router = express.Router();
 
 /* GET users listing. */
-router.get("/", function (req, res, next) {
+router.route("/").get((req, res, next) => {
   res.send("respond with a resource");
 });
 
 // GET login page
-router.get("/login", function (req, res, next) {
+router.route("/login").get((req, res, next) => {
   res.render("login");
 });
 
-router.get("/logout", function (req, res, next) {
-  req.logout();
-  res.redirect("/");
+router.route("/profile").get(verifyJWT, (req, res) => {
+  const { fullName, username } = req.user;
+  res.render("profile", { fullName, username });
 });
 
-router.get("/profile", function (req, res) {
-  res.render("profile");
-});
+router.route("/login").post(loginUser);
 
-router.post("/login", loginUser);
-router.post("/register", registerUser);
+router.route("/register").post(registerUser);
+
+router.route("/logout").get(verifyJWT, logoutUser, (req, res) => {
+  req.logout(); // Call req.logout() function to logout the user
+  res.redirect("/users"); // Redirect the user after logout
+});
 
 module.exports = router;
