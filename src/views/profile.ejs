@@ -17,8 +17,12 @@
       </div>
       <div id="lower-bg">
         <div class="text">
-          <p class="name">UserFullName</p>
-          <p class="title">Username</p>
+          <p class="name">
+            <%= fullName %>
+          </p>
+          <p class="title">
+            <%= username %>
+          </p>
         </div>
         <div id="icons">
           <a href="#" class="ico"><img width="48" height="48" src="https://img.icons8.com/color/48/gmail-new.png"
@@ -34,8 +38,7 @@
           </a>
         </div>
         <div id="btn">
-          <button class="msg">Subscribe</button>
-          <button class="msg">Message</button>
+          <a class="msg" href="/users/logout">LogMe Out</a>
         </div>
         <div id="l-c-s">
           <div class="num">
