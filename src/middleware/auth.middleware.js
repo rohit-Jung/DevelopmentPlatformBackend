@@ -20,8 +20,17 @@ const verifyJWT = asyncHandler(async (req, res, next) => {
     }
 
     if (!token) {
-      throw new ApiError(401, "Access token missing");
+      // console.log(
+      //   new ApiError(401, "Access token missing. User is not authorized")
+      // );
+
+      // Redirect to the login page if the access token is missing
+      res.redirect("/users/login");
+
+      // Return here to prevent further execution of code
+      return;
     }
+
     // console.log(req.cookies);
     // console.log("Access Token:", token);
 
