@@ -7,28 +7,34 @@ const {
 } = require("../controller/userController");
 const router = express.Router();
 
-/* GET users listing. */
+/* GET users page. */
 router.route("/").get((req, res, next) => {
-  res.send("respond with a resource");
+  res.render("index", {title: "Users Page"});
 });
 
 // GET login page
 router.route("/login").get((req, res, next) => {
-  res.render("login");
+  //to redirect the logged in user to the profile
+  if (req.user || req.cookies?.accessToken) {
+    res.redirect("/users/profile");
+  } else {
+    // User is not logged in, render the login form
+    res.render("login");
+  }
 });
 
 router.route("/profile").get(verifyJWT, (req, res) => {
-  const { fullName, username } = req.user;
+  //since the verifyJWT stores the info in req.user
+  const { fullName, username } = req.user; //Extract the details
   res.render("profile", { fullName, username });
 });
 
-router.route("/login").post(loginUser);
-
-router.route("/register").post(registerUser);
-
 router.route("/logout").get(verifyJWT, logoutUser, (req, res) => {
-  req.logout(); // Call req.logout() function to logout the user
-  res.redirect("/users"); // Redirect the user after logout
+  req.logout(); // Calling req.logout() function to logout the user
 });
+
+//Handling the POST request
+router.route("/login").post(loginUser);
+router.route("/register").post(registerUser);
 
 module.exports = router;

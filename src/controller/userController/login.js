@@ -9,7 +9,7 @@ const loginUser = asyncHandler(async (req, res) => {
   console.log(email, password);
 
   if (!(username || email) && !password) {
-    //Check for email or username
+    //Check for email or username and password
     throw new ApiError(400, "Please provide an email or password");
   }
 
@@ -43,6 +43,7 @@ const loginUser = asyncHandler(async (req, res) => {
     secure: true,
   };
 
+  //send the response
   const apiResponse = new ApiResponse(
     200,
     {
@@ -52,7 +53,8 @@ const loginUser = asyncHandler(async (req, res) => {
     },
     "User Logged In Successfully"
   );
-
+  
+  //log the response 
   console.log(JSON.stringify(apiResponse, null, 2));
 
   res
