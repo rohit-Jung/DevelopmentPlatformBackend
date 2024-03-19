@@ -5,11 +5,12 @@ const {
   logoutUser,
   registerUser,
 } = require("../controller/userController");
+const passport = require("passport");
 const router = express.Router();
 
 /* GET users page. */
 router.route("/").get((req, res, next) => {
-  res.render("index", {title: "Users Page"});
+  res.render("index", { title: "Users Page" });
 });
 
 // GET login page
@@ -33,6 +34,20 @@ router.route("/logout").get(verifyJWT, logoutUser, (req, res) => {
   req.logout(); // Calling req.logout() function to logout the user
 });
 
+router
+  .route("/login/google")
+  .get(
+    passport.authenticate("google", {
+      scope: ["profile", "email"],
+    })
+  );
+
+router.route("/auth/google/callback").get(
+  passport.authenticate("google", {
+    successRedirect: "/users/profile",
+    failureRedirect: "/users/login",
+  })
+);
 //Handling the POST request
 router.route("/login").post(loginUser);
 router.route("/register").post(registerUser);
