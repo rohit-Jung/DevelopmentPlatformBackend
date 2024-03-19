@@ -2,8 +2,6 @@ const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
-mongoose.connect("mongodb://localhost:27017/DevelopmentPlatformAuth");
-
 const userSchema = mongoose.Schema({
   username: {
     type: String,
@@ -28,7 +26,7 @@ const userSchema = mongoose.Schema({
   },
   password: {
     type: String,
-    required: true,
+    required: false,
   },
   refreshToken: {
     type: String,
